@@ -1,0 +1,28 @@
+body {
+    display: flex;
+    justify-content: space-around;
+    background-image: linear-gradient(100deg, #8B0000, #191970);
+    background-size: 100% 100%;
+    padding: 1%;
+    position: relative;
+}
+
+label {
+    color: white;
+}
+
+body input {
+    background-color: transparent;
+    color: white;
+}
+
+textarea {
+    background-color: transparent;
+    color: white;
+}
+
+html {}
+
+.bord {
+    border-radius: 3px;
+}

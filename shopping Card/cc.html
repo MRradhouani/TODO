@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+
+    <div id="myDIV" class="header">
+        <h2 style="margin:5px">My To Do List</h2>
+        <input type="text" id="myInput" placeholder="Title...">
+        <span onclick="newElement()" class="addBtn">Add</span>
+    </div>
+
+    <ul id="myUL">
+        <li>Hit the gym</li>
+        <li class="checked">Pay bills</li>
+        <li>Meet George</li>
+        <li>Buy eggs</li>
+        <li>Read a book</li>
+        <li>Organize office</li>
+    </ul>
+
+    <script>
+        // Create a "close" button and append it to each list item
+        var myNodelist = document.getElementsByTagName("LI");
+        var i;
+        for (i = 0; i < myNodelist.length; i++) {
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            myNodelist[i].appendChild(span);
+        }
+
+        // Click on a close button to hide the current list item
+        var close = document.getElementsByClassName("close");
+        var i;
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function() {
+                var div = this.parentElement;
+                if (this.querySelector(".counter") == null) {
+                    div.style.display = "none";
+                } else {
+                    var count = parseInt(this.querySelector(".counter").textContent);
+
+                    if (count <= 1) {
+                        div.style.display = "none";
+                        count--;
+                        this.querySelector(".counter").textContent = count;
+                    } else {
+                        count--;
+                        this.querySelector(".counter").textContent = count;
+                    }
+
+                }
+            }
+        }
+
+        // Add a "checked" symbol when clicking on a list item
+        var list = document.querySelector('ul');
+        list.addEventListener('click', function(ev) {
+            if (ev.target.tagName === 'LI') {
+                ev.target.classList.toggle('checked');
+            }
+        }, false);
+
+        // Create a new list item when clicking on the "Add" button
+        function newElement() {
+
+
+            var isExisting = false;
+            var existingArray = [];
+            var inputValue = document.getElementById("myInput").value;
+            var list = document.querySelectorAll("#myUL li");
+
+            [].forEach.call(list, function(el) {
+                [].forEach.call(el.childNodes, function(elem) {
+                    if (elem.nodeType == 3) {
+                        if (elem.nodeValue == inputValue) {
+                            isExisting = true;
+                            var span = elem.nextElementSibling;
+                            if (span.querySelector(".counter") == null) {
+                                var countSpan = document.createElement("span");
+                                var counter = 2;
+                                if (elem.parentElement.style.display == "none") {
+                                    counter = 1;
+                                    elem.parentElement.style.display = "list-item";
+                                }
+
+
+                                var count = document.createTextNode(counter);
+                                countSpan.className = "counter";
+                                countSpan.appendChild(count);
+                                span.appendChild(countSpan);
+
+                            } else {
+
+                                elem.parentElement.style.display = "list-item";
+                                var count = parseInt(span.querySelector(".counter").textContent);
+                                count++;
+                                span.querySelector(".counter").textContent = count;
+                            }
+
+
+                        }
+
+                    }
+                });
+            });
+
+
+            if (isExisting === false) {
+                var li = document.createElement("li");
+                var t = document.createTextNode(inputValue);
+                li.appendChild(t);
+                if (inputValue === '') {
+                    alert("You must write something!");
+                } else {
+                    document.getElementById("myUL").appendChild(li);
+                }
+                document.getElementById("myInput").value = "";
+
+                var span = document.createElement("SPAN");
+                var txt = document.createTextNode("\u00D7");
+                span.className = "close";
+                span.appendChild(txt);
+                li.appendChild(span);
+
+                for (i = 0; i < close.length; i++) {
+                    close[i].onclick = function() {
+
+                        var div = this.parentElement;
+                        if (this.querySelector(".counter") == null) {
+                            div.style.display = "none";
+                        } else {
+                            var count = parseInt(this.querySelector(".counter").textContent);
+
+                            if (count <= 1) {
+                                div.style.display = "none";
+                                count--;
+                                this.querySelector(".counter").textContent = count;
+                            } else {
+                                count--;
+                                this.querySelector(".counter").textContent = count;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>
